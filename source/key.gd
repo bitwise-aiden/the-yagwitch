@@ -26,4 +26,4 @@ func _ready() -> void:
 # Public methods
 
 func press() -> void:
-	__animation.play("press")
+	__animation.play("pressed")

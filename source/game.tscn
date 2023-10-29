@@ -30,136 +30,109 @@ scale = Vector2( 0.8, 0.8 )
 
 [node name="key" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 29.4999, 26.5001 )
-scale = Vector2( 1, 1 )
 key = "Q"
 
 [node name="key2" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 85.4999, 26.5001 )
-scale = Vector2( 1, 1 )
 key = "W"
 
 [node name="key3" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 139.5, 26.5001 )
-scale = Vector2( 1, 1 )
 key = "E"
 
 [node name="key4" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 194.5, 26.5001 )
-scale = Vector2( 1, 1 )
 key = "R"
 
 [node name="key5" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 250.5, 26.5001 )
-scale = Vector2( 1, 1 )
 key = "T"
 
 [node name="key6" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 305.5, 26.5001 )
-scale = Vector2( 1, 1 )
 key = "Y"
 
 [node name="key7" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 360.5, 26.5001 )
-scale = Vector2( 1, 1 )
 key = "U"
 
 [node name="key8" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 414.5, 26.5001 )
-scale = Vector2( 1, 1 )
 key = "I"
 
 [node name="key9" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 469.5, 26.5001 )
-scale = Vector2( 1, 1 )
 key = "O"
 
 [node name="key10" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 524.5, 26.5001 )
-scale = Vector2( 1, 1 )
 key = "P"
 
 [node name="key11" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 58.25, 57.2501 )
-scale = Vector2( 1, 1 )
 key = "A"
 
 [node name="key12" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 114.25, 57.2501 )
-scale = Vector2( 1, 1 )
 key = "S"
 
 [node name="key13" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 168.25, 57.2501 )
-scale = Vector2( 1, 1 )
 key = "D"
 
 [node name="key14" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 223.25, 57.2501 )
-scale = Vector2( 1, 1 )
 key = "F"
 
 [node name="key15" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 279.25, 57.2501 )
-scale = Vector2( 1, 1 )
 key = "G"
 
 [node name="key16" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 334.25, 57.2501 )
-scale = Vector2( 1, 1 )
 key = "H"
 
 [node name="key17" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 389.25, 57.2501 )
-scale = Vector2( 1, 1 )
 key = "J"
 
 [node name="key18" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 443.25, 57.2501 )
-scale = Vector2( 1, 1 )
 key = "K"
 
 [node name="key19" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 498.25, 57.2501 )
-scale = Vector2( 1, 1 )
 key = "L"
 
 [node name="key21" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 89.4999, 88.5001 )
-scale = Vector2( 1, 1 )
 key = "Z"
 
 [node name="key22" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 145.5, 88.5001 )
-scale = Vector2( 1, 1 )
 key = "X"
 
 [node name="key23" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 199.5, 88.5001 )
-scale = Vector2( 1, 1 )
 key = "C"
 
 [node name="key24" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 254.5, 88.5001 )
-scale = Vector2( 1, 1 )
 key = "V"
 
 [node name="key25" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 310.5, 88.5001 )
-scale = Vector2( 1, 1 )
 key = "B"
 
 [node name="key26" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 365.5, 88.5001 )
-scale = Vector2( 1, 1 )
 key = "N"
 
 [node name="key27" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 420.5, 88.5001 )
-scale = Vector2( 1, 1 )
 key = "M"
 
 [node name="key28" parent="keys" instance=ExtResource( 3 )]
 position = Vector2( 271.25, 120 )
-scale = Vector2( 1, 1 )
 key = " "
 override_texture = ExtResource( 5 )
