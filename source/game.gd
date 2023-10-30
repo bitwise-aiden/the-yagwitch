@@ -77,8 +77,6 @@ func _input(event: InputEvent) -> void:
 
 			__send_message(raw_message, false)
 
-			emit_signal("message_sent", raw_message.to_lower())
-
 
 # Private methods
 
@@ -92,6 +90,8 @@ func __send_message(message : String, left : bool = true) -> Message:
 	__messages.add_child(instance)
 
 	__show_message(instance)
+
+	emit_signal("message_sent", instance)
 
 	return instance
 
@@ -120,6 +120,8 @@ func __delete_messages(messages : Array) -> void:
 
 
 func __delete_message(message : Message) -> void:
+	__strip_formatting(message)
+
 	message.bbcode_text = "[color=#fba333]%s[/color]" % message.bbcode_text
 	yield(get_tree().create_timer(0.1), "timeout")
 	message.queue_free()
@@ -129,15 +131,37 @@ func __replace_message(message : Message, from : String, to: String) -> void:
 	if message.bbcode_text.find(from) == -1:
 		return
 
+	print(message.bbcode_text)
+
 	var from_t : String = "[color=#fba333]%s[/color]" % from
 	message.bbcode_text = message.bbcode_text.replace(from, from_t)
 	yield(get_tree().create_timer(0.1), "timeout")
+	print(message.bbcode_text)
 
 	var to_t : String = "[color=#fba333]%s[/color]" % to
 	message.bbcode_text = message.bbcode_text.replace(from_t, to_t)
 	yield(get_tree().create_timer(0.1), "timeout")
+	print(message.bbcode_text)
 
 	message.bbcode_text = message.bbcode_text.replace(to_t, to)
+
+
+func __strip_formatting(message : Message, include_just : bool = false) -> void:
+	message.bbcode_text = __without_formatting(message.bbcode_text, include_just)
+
+
+func __without_formatting(message : String, include_just : bool = false) -> String:
+	var format : String = "\\[((?!(right|/right)).*?)\\]"
+	if include_just:
+		format = "\\[.*?\\]"
+
+	var re : RegEx = RegEx.new()
+	re.compile(format)
+
+	message = re.sub(message, "", true)
+
+	return message
+
 
 
 func __game() -> void:
@@ -148,7 +172,8 @@ func __game() -> void:
 	__send_message("What is your name?")
 	__input = true
 
-	__player_name = yield(self, "message_sent")
+	var pm: Message = yield(self, "message_sent")
+	__player_name = __without_formatting(pm.bbcode_text, true)
 	__input = false
 
 	var a : Message = __send_message("Haha!")
@@ -159,7 +184,7 @@ func __game() -> void:
 	yield(get_tree().create_timer(1.0), "timeout")
 	var d : Message = __send_message("From now on, you're Fred")
 	yield(get_tree().create_timer(1.0), "timeout")
-	__replace_all(__player_name, "Fred")
+	__replace_message(pm, __player_name, "Fred")
 	__player_name = "Fred"
 
 	yield(get_tree().create_timer(1.0), "timeout")
@@ -223,7 +248,10 @@ func __wave(message : String, freq : int = 5, color : String = "#b874f1") -> Str
 func __prompt(message : String) -> int:
 	var prev : Message = __send_message(__wave(message))
 
-	var response : String = yield(self, "message_sent")
+	var response : String = __without_formatting(
+		yield(self, "message_sent").bbcode_text,
+		true
+	)
 	var count : int = 0
 	while response != message:
 		__send_message(" ")
@@ -233,7 +261,10 @@ func __prompt(message : String) -> int:
 		__send_message(" ")
 		prev = __send_message(__wave(message))
 
-		response = yield(self, "message_sent")
+		response = __without_formatting(
+			yield(self, "message_sent").bbcode_text,
+			true
+		)
 
 	return count
 
