@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/fonts/velopfont_24.tres" type="DynamicFont" id=1]
+[ext_resource path="res://source/message.gd" type="Script" id=2]
+
+[node name="message" type="RichTextLabel"]
+margin_right = 291.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+size_flags_horizontal = 3
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+script = ExtResource( 2 )

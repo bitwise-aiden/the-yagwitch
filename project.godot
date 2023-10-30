@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "RichTextLabel",
+"class": "Message",
+"language": "GDScript",
+"path": "res://source/message.gd"
+} ]
+_global_script_class_icons={
+"Message": ""
+}
+
 [application]
 
 config/name="the-yag-witch"
