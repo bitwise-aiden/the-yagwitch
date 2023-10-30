@@ -140,7 +140,6 @@ func __replace_message(message : Message, from : String, to: String) -> void:
 	message.bbcode_text = message.bbcode_text.replace(to_t, to)
 
 
-
 func __game() -> void:
 	__delete_all()
 
@@ -152,26 +151,20 @@ func __game() -> void:
 	__player_name = yield(self, "message_sent")
 	__input = false
 
-	var char_count : int = 0
-	for c in "abcdefghijklmnopqrstuvwxyz":
-		if __player_name.find(c) != -1:
-			char_count += 1
+	var a : Message = __send_message("Haha!")
+	yield(get_tree().create_timer(0.5), "timeout")
+	var b : Message = __send_message("%s is it?" % __player_name)
+	yield(get_tree().create_timer(0.5), "timeout")
+	var c : Message = __send_message("... I don't think so!")
+	yield(get_tree().create_timer(1.0), "timeout")
+	var d : Message = __send_message("From now on, you're Fred")
+	yield(get_tree().create_timer(1.0), "timeout")
+	__replace_all(__player_name, "Fred")
+	__player_name = "Fred"
 
-	if char_count > 13:
-		var a : Message = __send_message("Haha!")
-		yield(get_tree().create_timer(0.5), "timeout")
-		var b : Message = __send_message("%s is it?" % __player_name)
-		yield(get_tree().create_timer(0.5), "timeout")
-		var c : Message = __send_message("... I don't think so!")
-		yield(get_tree().create_timer(1.0), "timeout")
-		var d : Message = __send_message("From now on, you're Fred")
-		yield(get_tree().create_timer(1.0), "timeout")
-		__replace_all(__player_name, "Fred")
-		__player_name = "Fred"
-
-		yield(get_tree().create_timer(1.0), "timeout")
-		__delete_messages([a, b, c, d])
-		yield(get_tree().create_timer(0.5), "timeout")
+	yield(get_tree().create_timer(1.0), "timeout")
+	__delete_messages([a, b, c, d])
+	yield(get_tree().create_timer(0.5), "timeout")
 
 	__send_message("Hello %s!" % __player_name)
 	yield(get_tree().create_timer(0.5), "timeout")
