@@ -1,13 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://bktbtgbndmsh7"]
 
-[ext_resource path="res://assets/fonts/velopfont_24.tres" type="DynamicFont" id=1]
-[ext_resource path="res://source/message.gd" type="Script" id=2]
+[ext_resource type="FontFile" uid="uid://bdbygn7nxkuy3" path="res://assets/fonts/velopfont_24.tres" id="1"]
+[ext_resource type="Script" path="res://source/message.gd" id="2"]
 
 [node name="message" type="RichTextLabel"]
-margin_right = 291.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 0, 20 )
+custom_minimum_size = Vector2(0, 20)
+offset_right = 291.0
+offset_bottom = 20.0
 size_flags_horizontal = 3
-custom_fonts/normal_font = ExtResource( 1 )
+theme_override_fonts/normal_font = ExtResource("1")
+theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
-script = ExtResource( 2 )
+script = ExtResource("2")

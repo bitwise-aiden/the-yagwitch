@@ -3,15 +3,15 @@ extends Node2D
 
 # Public variables
 
-export var key : String
-export var override_texture : Texture
+@export var key : String
+@export var override_texture : Texture2D
 
 
 # Private variables
 
-onready var __animation : AnimationPlayer = $animation
-onready var __name : Label = $name
-onready var __sprite : Sprite = $sprite
+@onready var __animation : AnimationPlayer = $animation
+@onready var __name : Label = $name
+@onready var __sprite : Sprite2D = $sprite
 
 
 # Lifecyle methods

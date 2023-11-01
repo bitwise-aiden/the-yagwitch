@@ -16,9 +16,9 @@ const __MESSAGE : Resource = preload("res://source/message.tscn")
 
 var __keys : Dictionary = {}
 
-onready var __messages : VBoxContainer = $screen/scroll/messages
-onready var __text : RichTextLabel = $screen/text
-onready var __scroll : ScrollContainer = $screen/scroll
+@onready var __messages : VBoxContainer = $screen/scroll/messages
+@onready var __text : RichTextLabel = $screen/text
+@onready var __scroll : ScrollContainer = $screen/scroll
 
 var __current_text : String = ""
 var __cursor_elapsed : float = 0.0
@@ -46,7 +46,7 @@ func _process(delta: float) -> void:
 	if sin(__cursor_elapsed) < 0.0:
 		text_template = "%s"
 
-	__text.bbcode_text = text_template % __current_text
+	__text.text = text_template % __current_text
 
 
 func _input(event: InputEvent) -> void:
@@ -71,7 +71,7 @@ func _input(event: InputEvent) -> void:
 		if key == "backspace":
 			__current_text = __current_text.left(__current_text.length() - 1)
 
-		if key == "enter" && !__current_text.empty():
+		if key == "enter" && !__current_text.is_empty():
 			var raw_message : String = __current_text
 			__current_text = ""
 
@@ -82,10 +82,10 @@ func _input(event: InputEvent) -> void:
 
 
 func __send_message(message : String, left : bool = true) -> Message:
-	var instance : Message = __MESSAGE.instance()
+	var instance : Message = __MESSAGE.instantiate()
 
 	var template = "%s" if left else "[right]%s[/right]"
-	instance.bbcode_text = template % message.to_lower()
+	instance.text = template % message.to_lower()
 
 	__messages.add_child(instance)
 
@@ -97,7 +97,7 @@ func __send_message(message : String, left : bool = true) -> Message:
 
 
 func __show_message(message : Message) -> void:
-	yield(get_tree(), "idle_frame")
+	await get_tree().process_frame
 	__scroll.ensure_control_visible(message)
 
 
@@ -122,32 +122,32 @@ func __delete_messages(messages : Array) -> void:
 func __delete_message(message : Message) -> void:
 	__strip_formatting(message)
 
-	message.bbcode_text = "[color=#fba333]%s[/color]" % message.bbcode_text
-	yield(get_tree().create_timer(0.1), "timeout")
+	message.text = "[color=#fba333]%s[/color]" % message.text
+	await get_tree().create_timer(0.1).timeout
 	message.queue_free()
 
 
 func __replace_message(message : Message, from : String, to: String) -> void:
-	if message.bbcode_text.find(from) == -1:
+	if message.text.find(from) == -1:
 		return
 
-	print(message.bbcode_text)
+	print(message.text)
 
 	var from_t : String = "[color=#fba333]%s[/color]" % from
-	message.bbcode_text = message.bbcode_text.replace(from, from_t)
-	yield(get_tree().create_timer(0.1), "timeout")
-	print(message.bbcode_text)
+	message.text = message.text.replace(from, from_t)
+	await get_tree().create_timer(0.1).timeout
+	print(message.text)
 
 	var to_t : String = "[color=#fba333]%s[/color]" % to
-	message.bbcode_text = message.bbcode_text.replace(from_t, to_t)
-	yield(get_tree().create_timer(0.1), "timeout")
-	print(message.bbcode_text)
+	message.text = message.text.replace(from_t, to_t)
+	await get_tree().create_timer(0.1).timeout
+	print(message.text)
 
-	message.bbcode_text = message.bbcode_text.replace(to_t, to)
+	message.text = message.text.replace(to_t, to)
 
 
 func __strip_formatting(message : Message, include_just : bool = false) -> void:
-	message.bbcode_text = __without_formatting(message.bbcode_text, include_just)
+	message.text = __without_formatting(message.text, include_just)
 
 
 func __without_formatting(message : String, include_just : bool = false) -> String:
@@ -167,73 +167,73 @@ func __without_formatting(message : String, include_just : bool = false) -> Stri
 func __game() -> void:
 	__delete_all()
 
-	yield(self, "continue_sent")
+	await continue_sent
 
 	__send_message("What is your name?")
 	__input = true
 
-	var pm: Message = yield(self, "message_sent")
-	__player_name = __without_formatting(pm.bbcode_text, true)
+	var pm: Message = await message_sent
+	__player_name = __without_formatting(pm.text, true)
 	__input = false
 
 	var a : Message = __send_message("Haha!")
-	yield(get_tree().create_timer(0.5), "timeout")
+	await get_tree().create_timer(0.5).timeout
 	var b : Message = __send_message("%s is it?" % __player_name)
-	yield(get_tree().create_timer(0.5), "timeout")
+	await get_tree().create_timer(0.5).timeout
 	var c : Message = __send_message("... I don't think so!")
-	yield(get_tree().create_timer(1.0), "timeout")
+	await get_tree().create_timer(1.0).timeout
 	var d : Message = __send_message("From now on, you're Fred")
-	yield(get_tree().create_timer(1.0), "timeout")
+	await get_tree().create_timer(1.0).timeout
 	__replace_message(pm, __player_name, "Fred")
 	__player_name = "Fred"
 
-	yield(get_tree().create_timer(1.0), "timeout")
+	await get_tree().create_timer(1.0).timeout
 	__delete_messages([a, b, c, d])
-	yield(get_tree().create_timer(0.5), "timeout")
+	await get_tree().create_timer(0.5).timeout
 
 	__send_message("Hello %s!" % __player_name)
-	yield(get_tree().create_timer(0.5), "timeout")
+	await get_tree().create_timer(0.5).timeout
 	__send_message("I am...")
-	yield(get_tree().create_timer(0.5), "timeout")
+	await get_tree().create_timer(0.5).timeout
 	__send_message("...")
-	yield(get_tree().create_timer(1.0), "timeout")
+	await get_tree().create_timer(1.0).timeout
 	__send_message(" ")
 	__send_message("[wave amp=15 freq=5][color=#b874f1]The YagWitch[/color][/wave]")
 	__send_message(" ")
-	yield(get_tree().create_timer(1.0), "timeout")
+	await get_tree().create_timer(1.0).timeout
 	__send_message("I have taken over your")
 	__send_message("computer!")
 
-	yield(self, "continue_sent")
+	await self.continue_sent
 
 	__delete_all()
-	yield(get_tree().create_timer(1.0), "timeout")
+	await get_tree().create_timer(1.0).timeout
 
 	__send_message("To get your precious computer")
-	yield(get_tree().create_timer(0.5), "timeout")
+	await get_tree().create_timer(0.5).timeout
 	__send_message("back, you must defeat my gauntlet!")
-	yield(get_tree().create_timer(0.5), "timeout")
+	await get_tree().create_timer(0.5).timeout
 
 	__send_message(" ")
 	__send_message("All you have to do is")
 	__send_message("repeat after me...")
-	yield(get_tree().create_timer(1.0), "timeout")
+	await get_tree().create_timer(1.0).timeout
 
 	__send_message("Lets begin!")
-	yield(get_tree().create_timer(1.0), "timeout")
+	await get_tree().create_timer(1.0).timeout
 
 	__send_message(" ")
 	__input = true
-	var count : int = yield(__prompt("well good thing is works"), "completed")
+	var count : int = await __prompt("well good thing is works")
 	__input = false
 
-	yield(get_tree().create_timer(1.0), "timeout")
+	await get_tree().create_timer(1.0).timeout
 
 	if count > 3:
 		__send_message("Ugh! Took your time...")
 	else:
 		__send_message("Very good!")
-	yield(get_tree().create_timer(1.0), "timeout")
+	await get_tree().create_timer(1.0).timeout
 
 	__delete_all()
 
@@ -249,20 +249,20 @@ func __prompt(message : String) -> int:
 	var prev : Message = __send_message(__wave(message))
 
 	var response : String = __without_formatting(
-		yield(self, "message_sent").bbcode_text,
+		(await message_sent).text,
 		true
 	)
 	var count : int = 0
 	while response != message:
 		__send_message(" ")
 		__send_message("%s Lets try again..." % __wave("Wrong!", 10, "#ff5050"))
-		yield(get_tree().create_timer(1.0), "timeout")
+		await get_tree().create_timer(1.0).timeout
 
 		__send_message(" ")
 		prev = __send_message(__wave(message))
 
 		response = __without_formatting(
-			yield(self, "message_sent").bbcode_text,
+			(await message_sent).text,
 			true
 		)
 
