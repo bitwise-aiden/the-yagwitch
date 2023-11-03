@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="the-yag-witch"
+config/name="the-yagwitch"
 run/main_scene="res://source/game.tscn"
 config/features=PackedStringArray("4.1")
 config/icon="res://icon.png"
@@ -19,6 +19,7 @@ config/icon="res://icon.png"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/stretch/mode="viewport"
 
 [gui]
 

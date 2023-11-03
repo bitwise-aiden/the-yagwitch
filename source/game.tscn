@@ -3,10 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://kloyvp47ktip" path="res://assets/computer.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://b13b7lysfrgny" path="res://assets/background.png" id="2"]
 [ext_resource type="PackedScene" uid="uid://jkdtps4w02pm" path="res://source/key.tscn" id="3"]
+[ext_resource type="Script" path="res://source/messages.gd" id="3_hhk8k"]
 [ext_resource type="Script" path="res://source/game.gd" id="4"]
 [ext_resource type="Texture2D" uid="uid://ct6hg4w17ke3q" path="res://assets/space.png" id="5"]
 [ext_resource type="FontFile" uid="uid://bdbygn7nxkuy3" path="res://assets/fonts/velopfont_24.tres" id="6"]
-[ext_resource type="PackedScene" uid="uid://bktbtgbndmsh7" path="res://source/message.tscn" id="7"]
 
 [node name="game" type="Node2D"]
 script = ExtResource("4")
@@ -29,15 +29,21 @@ offset_top = 7.0
 offset_right = 489.0
 offset_bottom = 316.0
 follow_focus = true
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
 
 [node name="messages" type="VBoxContainer" parent="screen/scroll"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("3_hhk8k")
+default_color = Color(1, 1, 1, 1)
+delete_color = Color(0.984314, 0.639216, 0.2, 1)
+replace_color = Color(0.984314, 0.639216, 0.2, 1)
 
-[node name="message" parent="screen/scroll/messages" instance=ExtResource("7")]
+[node name="Container" type="Container" parent="screen/scroll/messages"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-scroll_active = false
 
 [node name="text" type="RichTextLabel" parent="screen"]
 custom_minimum_size = Vector2(0, 20)
